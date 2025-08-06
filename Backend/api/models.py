@@ -56,7 +56,7 @@ class SoftSkill(models.Model):
         ('No', 'No'),
     ]
     name = models.CharField(max_length=100)
-    employeelevel = models.ForeignKey(ResponsibilityLevel, on_delete=models.CASCADE)
+    responsibilitylevel = models.ForeignKey(ResponsibilityLevel, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -70,6 +70,7 @@ class TechnicalSkill(models.Model):
     name = models.CharField(max_length=100)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
     division = models.ForeignKey(Division, on_delete=models.CASCADE, null=True, blank=True)
+    jobfunction = models.ForeignKey(JobFunction, on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

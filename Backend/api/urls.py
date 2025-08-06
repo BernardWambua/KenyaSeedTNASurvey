@@ -2,10 +2,13 @@ from django.urls import path
 from .views import QuestionnaireViewSet, GenderViewSet, AgeGroupViewSet,\
         ServiceAgeGroupViewSet,ResponsibilityLevelViewSet, DepartmentViewSet, JobFunctionViewSet, \
         DivisionViewSet, DeliveryModeViewSet, SoftSkillViewSet, TechnicalSkillViewSet, \
-        QuestionnaireSoftSkillViewSet, QuestionnaireTechnicalSkillViewSet, SkillProficiencyViewSet
+        QuestionnaireSoftSkillViewSet, QuestionnaireTechnicalSkillViewSet, SkillProficiencyViewSet, \
+        upload_jobfunctions, upload_technicalskills
+
+
 urlpatterns = [
-    # path('upload-jobtypes/', upload_jobtypes, name='upload_jobtypes'),
-    # path('upload-technicalskills/', upload_technicalskills, name='upload_technicalskills'),
+    path('upload-jobfunctions/', upload_jobfunctions, name='upload_jobfunctions'),
+    path('upload-technicalskills/', upload_technicalskills, name='upload_technicalskills'),
     path('questionnaire/', QuestionnaireViewSet.as_view({
         'get': 'list',
         'post': 'create'

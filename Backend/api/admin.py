@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Questionnaire, Gender, AgeGroup, ServiceAgeGroup, ResponsibilityLevel, Department, Division,\
-    SoftSkill, TechnicalSkill, QuestionnaireSoftSkill, QuestionnaireTechnicalSkill, DeliveryMode, SkillProficiency
+    SoftSkill, TechnicalSkill, QuestionnaireSoftSkill, QuestionnaireTechnicalSkill, DeliveryMode, SkillProficiency, \
+    JobFunction
 
 
 # Register your models here.
@@ -14,6 +15,7 @@ admin.site.register(SoftSkill)
 admin.site.register(TechnicalSkill)
 admin.site.register(DeliveryMode)
 admin.site.register(SkillProficiency)
+admin.site.register(JobFunction)
 
 class QuestionnaireSoftSkillInline(admin.TabularInline):
     model = QuestionnaireSoftSkill
