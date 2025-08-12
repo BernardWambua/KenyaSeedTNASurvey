@@ -1,10 +1,12 @@
 from rest_framework import viewsets
 from .models import Questionnaire, Gender, AgeGroup, ServiceAgeGroup, DeliveryMode,\
     ResponsibilityLevel, Department, Division, SoftSkill, TechnicalSkill, JobFunction, \
-    QuestionnaireSoftSkill, QuestionnaireTechnicalSkill, SkillProficiency
+    QuestionnaireSoftSkill, QuestionnaireTechnicalSkill, SkillProficiency, \
+    TrainingImportance, QuestionnaireTrainingMaterialPreference, TrainingMaterialPreference
 from .serializers import QuestionnaireSerializer, GenderSerializer, AgeGroupSerializer, ServiceAgeGroupSerializer, JobFunctionSerializer,\
     DepartmentSerializer, DivisionSerializer, ResponsibilityLevelSerializer, SoftSkillSerializer, TechnicalSkillSerializer,\
-        QuestionnaireSoftSkillSerializer, QuestionnaireTechnicalSkillSerializer, DeliveryModeSerializer, SkillProficiencySerializer
+    QuestionnaireSoftSkillSerializer, QuestionnaireTechnicalSkillSerializer, DeliveryModeSerializer, SkillProficiencySerializer, \
+    TrainingImportanceSerializer, QuestionnaireTrainingMaterialPreferenceSerializer, TrainingMaterialPreferenceSerializer
 import pandas as pd
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -201,6 +203,25 @@ class QuestionnaireTechnicalSkillViewSet(viewsets.ModelViewSet):
             return QuestionnaireTechnicalSkill.objects.filter(questionnaire_id=questionnaire_id)
         return QuestionnaireTechnicalSkill.objects.none()
 
+class TrainingImportanceViewSet(viewsets.ModelViewSet):
+    serializer_class = TrainingImportanceSerializer
 
+    def get_queryset(self):
+        questionnaire_id = self.request.query_params.get('questionnaire', None)
+        if questionnaire_id:
+            return TrainingImportance.objects.filter(questionnaire_id=questionnaire_id)
+        return TrainingImportance.objects.none()
 
+class QuestionnaireTrainingMaterialPreferenceViewSet(viewsets.ModelViewSet):
+    serializer_class = QuestionnaireTrainingMaterialPreferenceSerializer
 
+    def get_queryset(self):
+        questionnaire_id = self.request.query_params.get('questionnaire', None)
+        if questionnaire_id:
+            return QuestionnaireTrainingMaterialPreference.objects.filter(questionnaire_id=questionnaire_id)
+        return QuestionnaireTrainingMaterialPreference.objects.none()
+    
+class TrainingMaterialPreferenceViewSet(viewsets.ModelViewSet):
+    serializer_class = TrainingMaterialPreferenceSerializer
+    def get_queryset(self):
+        return TrainingMaterialPreference.objects.all()

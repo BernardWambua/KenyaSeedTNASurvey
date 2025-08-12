@@ -3,7 +3,8 @@ from .views import QuestionnaireViewSet, GenderViewSet, AgeGroupViewSet,\
         ServiceAgeGroupViewSet,ResponsibilityLevelViewSet, DepartmentViewSet, JobFunctionViewSet, \
         DivisionViewSet, DeliveryModeViewSet, SoftSkillViewSet, TechnicalSkillViewSet, \
         QuestionnaireSoftSkillViewSet, QuestionnaireTechnicalSkillViewSet, SkillProficiencyViewSet, \
-        upload_jobfunctions, upload_technicalskills
+        upload_jobfunctions, upload_technicalskills, TrainingImportanceViewSet, \
+        QuestionnaireTrainingMaterialPreferenceViewSet, TrainingMaterialPreferenceViewSet
 
 
 urlpatterns = [
@@ -58,7 +59,17 @@ urlpatterns = [
     }), name='skill-proficiency'),
     path('job-functions/', JobFunctionViewSet.as_view({
         'get': 'list'
-    }), name='job-functions')
-        
+    }), name='job-functions'),
+    path('training-importances/', TrainingImportanceViewSet.as_view({
+        'get': 'list',
+        'post': 'create'
+    }), name='training-importances'),
+    path('questionnaire-training-material-preferences/', QuestionnaireTrainingMaterialPreferenceViewSet.as_view({
+        'get': 'list',
+        'post': 'create'
+    }), name='questionnaire-training-material-preferences'),
+    path('training-material-preferences/', TrainingMaterialPreferenceViewSet.as_view({
+        'get': 'list'
+    }), name='training-material-preferences')
 ]
 

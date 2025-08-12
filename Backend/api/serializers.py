@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Questionnaire, Gender, AgeGroup, ServiceAgeGroup, ResponsibilityLevel, Department, Division, \
     SoftSkill, TechnicalSkill, QuestionnaireSoftSkill, QuestionnaireTechnicalSkill, DeliveryMode, SkillProficiency, \
-    JobFunction
+    JobFunction, TrainingImportance, QuestionnaireTrainingMaterialPreference, TrainingMaterialPreference
 
 class GenderSerializer(serializers.ModelSerializer):
     gender_name = serializers.CharField(source='name', read_only=True)
@@ -79,6 +79,21 @@ class JobFunctionSerializer(serializers.ModelSerializer):
         model = JobFunction
         fields = '__all__'
 
+class TrainingMaterialPreferenceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TrainingMaterialPreference
+        fields = '__all__'
+
+class TrainingImportanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TrainingImportance
+        fields = '__all__'
+        
+class QuestionnaireTrainingMaterialPreferenceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuestionnaireTrainingMaterialPreference
+        fields = '__all__'
+
 class QuestionnaireSerializer(serializers.ModelSerializer):
     softskill_entries = QuestionnaireSoftSkillSerializer(many=True, read_only=True)
     technicalskill_entries = QuestionnaireTechnicalSkillSerializer(many=True, read_only=True)
@@ -90,6 +105,7 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
     division_name = serializers.CharField(source='division.name', read_only=True)
     responsibilitylevel_name = serializers.CharField(source='responsibilitylevel.name', read_only=True)
     jobfunction_name = serializers.CharField(source='jobfunction.name', read_only=True)
+    
     class Meta:
         model = Questionnaire
         fields = '__all__'

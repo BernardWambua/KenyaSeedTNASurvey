@@ -9,7 +9,7 @@ function Navbar() {
         </a>  
       </div>
       <div className="navbar-menu">
-        <a className="navbar-item" href="/" style={{ color: 'yellow' }}>
+        <a className="navbar-item" href="/" style={{ fontSize: '2rem', fontWeight: 'bold', color: 'yellow', backgroundColor: 'darkgreen', padding: '8px 16px', borderRadius: '6px' }}>
           Training Needs Analysis Survey
         </a>
       </div>
