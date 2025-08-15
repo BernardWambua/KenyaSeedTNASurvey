@@ -37,7 +37,6 @@ const TRAINING_EFFECTIVENESS_CHOICES = [
 ];
 
 function QuestionnaireForm() {
-  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     employeename: '',
     staffno: '',
@@ -159,15 +158,20 @@ function QuestionnaireForm() {
         id: ''
       });
     } catch (error) {
-      console.error('Error:', error);
-      alert('Error submitting form: ' + (error.response?.data?.message || error.message));
+      if (error.response && error.response.data) {
+      const messages = Object.entries(error.response.data)
+        .map(([field, msgs]) => `${field}: ${Array.isArray(msgs) ? msgs.join(', ') : msgs}`)
+        .join(' | ');
+      alert(messages);
+    } else {
+      alert('An unexpected error occurred. Please try again.');
+    }
     }
   };
 
   return (
-    <div className="box">
+    <div className="box has-background-secondary">
       <form onSubmit={handleSubmit}>
-        
         <div className="field">
           <label className="label" style={{ backgroundColor: 'darkgreen', color: 'yellow' }}>
             Please set aside some time to respond to this survey as 
@@ -177,15 +181,8 @@ function QuestionnaireForm() {
           </label>
           <label className="label" style={{ backgroundColor: 'darkgreen', color: 'yellow' }}>The results of this entire survey are confidential.</label>
         </div>
-        
-        {/* Personal Data Section */}
-        {step === 1 && (
-        <fieldset>
-          <legend style={{ fontSize: '2rem', fontWeight: 'bold', color: 'yellow', backgroundColor: 'darkgreen', padding: '8px 16px', borderRadius: '6px' }}>
-            Personal Data
-          </legend>
           <div className="field">
-            <label className="label">Please enter your staff number</label>
+            <label className="label">1. Please enter your staff number</label>
             <div className="control">
               <input 
                 className="input" 
@@ -200,7 +197,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">Please enter your name</label>
+            <label className="label">2. Please enter your name</label>
             <div className="control">
               <input 
                 className="input" 
@@ -215,7 +212,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">Please select your gender</label>
+            <label className="label">3. Please select your gender</label>
             <div className="control">
               <GenderDropdown 
                 value={formData.gender}
@@ -225,7 +222,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">Please select your age group</label>
+            <label className="label">4. Please select your age group</label>
             <div className="control">
               <AgeGroupDropdown 
                 value={formData.agegroup}
@@ -235,7 +232,7 @@ function QuestionnaireForm() {
           </div>
           
           <div className="field">
-            <label className="label">Please indicate how long you have worked at Kenya Seed Ltd</label>
+            <label className="label">5. Please indicate how long you have worked at Kenya Seed Ltd</label>
             <div className="control">
               <ServiceAgeGroupDropdown 
                 value={formData.serviceagegroup}
@@ -243,17 +240,8 @@ function QuestionnaireForm() {
               />
             </div>
           </div>
-          <button type="button" onClick={() => setStep(2)} className="button is-text">Next</button>
-        </fieldset>
-        )}
-        {/* Training Section */}
-        {step === 2 && (
-        <fieldset>
-        <legend style={{ fontSize: '2rem', fontWeight: 'bold', color: 'yellow', backgroundColor: 'darkgreen', padding: '8px 16px', borderRadius: '6px' }}>
-          Training and Development
-        </legend>
-        <div className="field">
-            <label className="label">Please select your responsibility level</label>
+          <div className="field">
+            <label className="label">6. Please select your responsibility level</label>
             <div className="control">
               <EmployeeLevelDropdown 
                 value={formData.employeelevel}
@@ -263,7 +251,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">Please select your department</label>
+            <label className="label">7. Please select your department</label>
             <div className="control">
               <DepartmentDropdown 
                 value={formData.department}
@@ -279,7 +267,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">Please select your division</label>
+            <label className="label">8. Please select your division</label>
             <div className="control">
               <DivisionDropdown 
                 value={formData.division}
@@ -290,7 +278,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">Please select your job function</label>
+            <label className="label">9. Please select your job function</label>
             <div className="control">
               <JobTypeDropdown 
                 value={formData.jobfunction}
@@ -300,7 +288,7 @@ function QuestionnaireForm() {
             </div>
           </div>
           <div className="field">
-            <label className="label">To help us understand your technical development and training needs, please select the training and development that you have received at Kenya Seed Company in the last two years from the list below: </label>
+            <label className="label">10. To help us understand your technical development and training needs, please select the training and development that you have received at Kenya Seed Company in the last two years from the list below: </label>
           </div>
 
           <div className="field">
@@ -324,18 +312,9 @@ function QuestionnaireForm() {
               />
             </div>
           </div>
-          <button type="button" onClick={() => setStep(1)} className="button is-text">Back</button>
-          <button type="button" onClick={() => setStep(3)} className="button is-text">Next</button>
-        </fieldset>
-        )}
-        {/* Preferred Learning Methods Section */}
-        {step === 3 && (
-          <fieldset>
-            <legend style={{ fontSize: '2rem', fontWeight: 'bold', color: 'yellow', backgroundColor: 'darkgreen', padding: '8px 16px', borderRadius: '6px' }}>
-              Preferred Learning Methods
-            </legend>
+
             <div className="field">
-              <label className="label">Please select your preferred training location</label>
+              <label className="label">11. Please select your preferred training location</label>
               <div className="control">
                 <select
                   className="input"
@@ -360,7 +339,7 @@ function QuestionnaireForm() {
             </div>
 
             <div className="field">
-              <label className="label">Which method of training do you prefer?</label>
+              <label className="label">13. Which method of training do you prefer?</label>
               <div className="control">
                 <select
                   className="input"
@@ -386,7 +365,7 @@ function QuestionnaireForm() {
 
 
             <div className="field">
-              <label className="label">How would you rate the effectiveness of the training programs you have participated in?</label>
+              <label className="label">15. How would you rate the effectiveness of the training programs you have participated in?</label>
               <div className="control">
                 <select
                   className="input"
@@ -402,7 +381,7 @@ function QuestionnaireForm() {
             </div>
 
             <div className="field">
-              <label className="label">What improvements do you suggest to make the training programs more effective?</label>
+              <label className="label">16. What improvements do you suggest to make the training programs more effective?</label>
               <div className="control">
                 <textarea
                   className="textarea"
@@ -415,10 +394,6 @@ function QuestionnaireForm() {
               </div>
             </div>
 
-
-            <button type="button" onClick={() => setStep(2)} className="button is-text">Back</button>
-          </fieldset>
-        )}
         <div className="field is-grouped">
           <div className="control">
             <button type="submit" className="button is-link">Submit</button>

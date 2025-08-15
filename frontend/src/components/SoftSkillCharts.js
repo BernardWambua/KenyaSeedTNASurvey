@@ -42,7 +42,7 @@ function SoftSkillCharts({ questionnaires }) {
     const allSkills = [];
     questionnaires.forEach((q) => {
       if (
-        (!empLevelId || q.employeelevel === empLevelId)
+        (!empLevelId || q.responsibilitylevel === empLevelId)
       ) {
         (q.softskill_entries || []).forEach((skill) => {
           allSkills.push({
@@ -66,7 +66,7 @@ function SoftSkillCharts({ questionnaires }) {
         {
           label: 'Soft Skill Count',
           data: skillLabels.map((name) => skillCounts[name] || 0),
-          backgroundColor: '#FF8416',
+          backgroundColor: 'darkgreen',
         },
       ],
     };
@@ -74,7 +74,7 @@ function SoftSkillCharts({ questionnaires }) {
 
   // Calculate total responses for the selected employee level
   const totalResponses = questionnaires.filter(
-    q => Number(q.employeelevel) === empLevelId
+    q => Number(q.responsibilitylevel) === empLevelId
   ).length;
 
   return (

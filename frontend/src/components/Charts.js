@@ -20,8 +20,8 @@ function Charts({ questionnaires }) {
   // Count per employee level
   const employeeLevelCounts = {};
   questionnaires.forEach(q => {
-    if (q.employeelevel_name) {
-      employeeLevelCounts[q.employeelevel_name] = (employeeLevelCounts[q.employeelevel_name] || 0) + 1;
+    if (q.responsibilitylevel_name) {
+      employeeLevelCounts[q.responsibilitylevel_name] = (employeeLevelCounts[q.responsibilitylevel_name] || 0) + 1;
     }
   });
 
@@ -56,7 +56,7 @@ function Charts({ questionnaires }) {
       {
         label: 'Count per Department',
         data: Object.values(departmentCounts),
-        backgroundColor: '#6f42c1',
+        backgroundColor: 'darkgreen',
       },
     ],
   };
@@ -78,7 +78,7 @@ function Charts({ questionnaires }) {
       {
         label: 'Count per Gender',
         data: Object.values(genderCounts),
-        backgroundColor: '#FF8416',
+        backgroundColor: 'yellow',
       },
     ],
   };

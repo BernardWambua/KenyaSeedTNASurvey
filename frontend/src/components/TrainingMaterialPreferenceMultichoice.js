@@ -28,7 +28,7 @@ function TrainingMaterialPreferenceMultichoice({ value = [], onChange }) {
 
     return (
         <div>
-            <label><b>How do you prefer to receive training materials? (Select all that apply)</b></label>
+            <label>14. <b>How do you prefer to receive training materials? (Select all that apply)</b></label>
             <div style={{ marginTop: 10 }}>
                 {MATERIAL_TYPE_CHOICES.map(option => (
                     <label key={option.value} style={{ display: 'block', marginBottom: 8 }}>

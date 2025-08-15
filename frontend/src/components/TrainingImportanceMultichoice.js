@@ -23,7 +23,7 @@ function TrainingImportanceMultichoice({ value = [], onChange }) {
 
     return (
         <div>
-            <label><b>What type of training do you feel is most important for your job? (Select all that apply)</b></label>
+            <label>12. What type of training do you feel is most important for your job? (Select all that apply)</label>
             <div style={{ marginTop: 10 }}>
                 {TRAINING_TYPE_CHOICES.map(option => (
                     <label key={option.value} style={{ display: 'block', marginBottom: 8 }}>

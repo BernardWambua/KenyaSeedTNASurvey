@@ -59,12 +59,16 @@ class TechnicalSkillSerializer(serializers.ModelSerializer):
         
 class QuestionnaireSoftSkillSerializer(serializers.ModelSerializer):
     softskill_name = serializers.CharField(source='softskill.name', read_only=True)
+    skillproficiency_name = serializers.CharField(source='skillproficiency.name', read_only=True)
+    deliverymode_name = serializers.CharField(source='modeofdelivery.name', read_only=True)
     class Meta:
         model = QuestionnaireSoftSkill
         fields = '__all__'
         
 class QuestionnaireTechnicalSkillSerializer(serializers.ModelSerializer):
     technicalskill_name = serializers.CharField(source='technicalskill.name', read_only=True)
+    skillproficiency_name = serializers.CharField(source='skillproficiency.name', read_only=True)
+    deliverymode_name = serializers.CharField(source='modeofdelivery.name', read_only=True)
     class Meta:
         model = QuestionnaireTechnicalSkill
         fields = '__all__'

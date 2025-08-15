@@ -121,11 +121,10 @@ function QuestionnaireList({ questionnaires }) {
                             <tr key={questionnaire.id}>
                                 <td>{questionnaire.id}</td>
                                 <td>{hideStaffNumber(questionnaire.staffno)}</td>
-                                <td>{questionnaire.region_name}</td>
                                 <td>{questionnaire.gender_name}</td>
                                 <td>{questionnaire.department_name}</td>
                                 <td>{questionnaire.division_name}</td>
-                                <td>{questionnaire.jobtype_name}</td>
+                                <td>{questionnaire.jobfunction_name}</td>
                                 <td>{new Date(questionnaire.created_at).toLocaleString()}</td>
                                 <td>
                                     <button
@@ -170,6 +169,7 @@ function QuestionnaireList({ questionnaires }) {
                                     <tr>
                                         <th>Skill Name</th>
                                         <th>Mode of Delivery</th>
+                                        <th>Proficiency</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -177,7 +177,8 @@ function QuestionnaireList({ questionnaires }) {
                                         selected.softskill_entries.map((entry, idx) => (
                                             <tr key={idx}>
                                                 <td>{entry.softskill_name || entry.softskill}</td>
-                                                <td>{entry.modeofdelivery}</td>
+                                                <td>{entry.deliverymode_name}</td>
+                                                <td>{entry.skillproficiency_name}</td>
                                             </tr>
                                         ))
                                     ) : (
@@ -194,6 +195,7 @@ function QuestionnaireList({ questionnaires }) {
                                     <tr>
                                         <th>Skill Name</th>
                                         <th>Mode of Delivery</th>
+                                        <th>Proficiency</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -201,7 +203,8 @@ function QuestionnaireList({ questionnaires }) {
                                         selected.technicalskill_entries.map((entry, idx) => (
                                             <tr key={idx}>
                                                 <td>{entry.technicalskill_name || entry.technicalskill}</td>
-                                                <td>{entry.modeofdelivery}</td>
+                                                <td>{entry.deliverymode_name}</td>
+                                                <td>{entry.skillproficiency_name}</td>
                                             </tr>
                                         ))
                                     ) : (
@@ -212,29 +215,6 @@ function QuestionnaireList({ questionnaires }) {
                                 </tbody>
                             </table>
 
-                            <h4 className="title is-6 mt-4">Strategy Delivery Skills</h4>
-                            <table className="table is-striped is-hoverable is-fullwidth">
-                                <thead>
-                                    <tr>
-                                        <th>Skill Name</th>
-                                        <th>Mode of Delivery</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {(selected.strategydeliveryskill_entries && selected.strategydeliveryskill_entries.length > 0) ? (
-                                        selected.strategydeliveryskill_entries.map((entry, idx) => (
-                                            <tr key={idx}>
-                                                <td>{entry.strategydeliveryskill_name || entry.strategydeliveryskill}</td>
-                                                <td>{entry.modeofdelivery}</td>
-                                            </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan="2">No strategy delivery skills</td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
                         </section>
                         <footer className="modal-card-foot">
                             <button className="button" onClick={closeModal}>Close</button>

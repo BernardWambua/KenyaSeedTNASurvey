@@ -1,11 +1,11 @@
-import logo from '../images/logo.jpeg';
+import kenyaseedlogo from '../images/kenya-seed-logo.png';
 
 function Navbar() {
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation" style={{ backgroundColor: 'darkgreen' }}>
       <div className="navbar-brand">
         <a className="navbar-item" href="/">
-          <img src={logo} alt="KenGen Logo" style={{ maxHeight: '3rem', width: 'auto' }} />
+          <img src={kenyaseedlogo} alt="Kenya Seed Logo" style={{maxHeight: '3rem', width: 'auto' }} />
         </a>  
       </div>
       <div className="navbar-menu">

@@ -42,7 +42,7 @@ function SkillBarCharts({ questionnaires }) {
   // Fetch job types when division changes
   useEffect(() => {
     if (selectedDivision) {
-      api.get(`/api/job-types/?division=${selectedDivision}`)
+      api.get(`/api/job-functions/?division=${selectedDivision}`)
         .then(res => setJobTypes(res.data))
         .catch(() => setJobTypes([]));
       setSelectedJobType('');
@@ -78,7 +78,7 @@ function SkillBarCharts({ questionnaires }) {
       if (
         (!depId || q.department === depId) &&
         (!divId || q.division === divId) &&
-        (!jobId || q.jobtype === jobId)
+        (!jobId || q.jobfunction === jobId)
       ) {
         (q.technicalskill_entries || []).forEach((skill) => {
           allSkills.push({
