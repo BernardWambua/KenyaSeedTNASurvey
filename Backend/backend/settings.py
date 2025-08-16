@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-)2!ch5^q98&3s9+%i5&1%sxp0btve&vc4xrnwhmj(o)1ixy%z=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "True") == "True"
+DEBUG = "False"
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = ["139.84.233.187", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -133,4 +133,5 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://139.84.233.187:3000",
     "http://139.84.233.187:8000",
+    "http://139.84.233.187"
 ]
