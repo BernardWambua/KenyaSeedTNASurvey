@@ -241,7 +241,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className='field'>
-            <label className="label">4. Please select your grade</label>
+            <label className="label">5. Indicate your job grade</label>
             <div className="control">
               <select
                 className="input"
@@ -259,7 +259,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">5. Please select your responsibility level</label>
+            <label className="label">6. Please select your responsibility level</label>
             <div className="control">
               <EmployeeLevelDropdown 
                 value={formData.employeelevel}
@@ -269,7 +269,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">6. Please select your department</label>
+            <label className="label">7. Please select your department</label>
             <div className="control">
               <DepartmentDropdown 
                 value={formData.department}
@@ -285,7 +285,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">7. Please select your division</label>
+            <label className="label">8. Please select your division</label>
             <div className="control">
               <DivisionDropdown 
                 value={formData.division}
@@ -296,7 +296,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">8. Please select your job function</label>
+            <label className="label">9. Please select your job function</label>
             <div className="control">
               <JobTypeDropdown 
                 value={formData.jobfunction}
@@ -306,7 +306,7 @@ function QuestionnaireForm() {
             </div>
           </div>
           <div className="field">
-            <label className="label">9. To help us understand your technical development and training needs, please select the training and development that you have received at Kenya Seed Company in the last two years from the list below: </label>
+            <label className="label">10. To help us understand your technical development and training needs, please select the training and development that you have received at Kenya Seed Company in the last two years from the list below: </label>
           </div>
 
           <div className="field">
@@ -332,7 +332,7 @@ function QuestionnaireForm() {
           </div>
 
             <div className="field">
-              <label className="label">10. Please select your preferred training location</label>
+              <label className="label">11. Please select your preferred training location</label>
               <div className="control">
                 <select
                   className="input"
@@ -348,7 +348,7 @@ function QuestionnaireForm() {
             </div>
 
             <div className="field">
-              <label className="label">11. What type of training do you feel is most important for your job?</label>
+              <label className="label">12. What type of training do you feel is most important for your job?</label>
               <div className="control">
                 <textarea
                   className="textarea"
@@ -362,7 +362,7 @@ function QuestionnaireForm() {
             </div>
 
             <div className="field">
-              <label className="label">12. Which method of training do you prefer?</label>
+              <label className="label">13. Which method of training do you prefer?</label>
               <div className="control">
                 <select
                   className="input"
@@ -386,9 +386,8 @@ function QuestionnaireForm() {
               </div>
             </div>
 
-
             <div className="field">
-              <label className="label">14. How do you rate the effectiveness of the training programs you have participated in?</label>
+              <label className="label">15. How do you rate the effectiveness of the training you last participated in?</label>
               <div className="control">
                 <select
                   className="input"
@@ -404,7 +403,7 @@ function QuestionnaireForm() {
             </div>
 
             <div className="field">
-              <label className="label">15. What improvements do you suggest to make the training programs more effective?</label>
+              <label className="label">16. What improvements do you suggest to make the training programs more effective?</label>
               <div className="control">
                 <textarea
                   className="textarea"
