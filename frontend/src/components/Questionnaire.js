@@ -10,7 +10,6 @@ import DivisionDropdown from './DivisionDropdown';
 import SoftSkillsMultichoice from './SoftSkillsMultichoice';
 import TechnicalSkillsMultichoice from './TechnicalSkillsMultichoice';
 import JobTypeDropdown from './JobTypeDropdown';
-import TrainingImportanceMultichoice from './TrainingImportanceMultichoice';
 import TrainingMaterialPreferenceMultichoice from './TrainingMaterialPreferenceMultichoice';
 
 const TRAINING_LOCATION_CHOICES = [
@@ -36,9 +35,25 @@ const TRAINING_EFFECTIVENESS_CHOICES = [
   { value: 'not_at_all_effective', label: 'Not at all effective' },
 ];
 
+const GRADE_CHOICES = [
+  { value: '', label: 'Select grade' },
+  { value: '1', label: 'Grade 1' },
+  { value: '2', label: 'Grade 2' },
+  { value: '3', label: 'Grade 3' },
+  { value: '4', label: 'Grade 4' },
+  { value: '5', label: 'Grade 5' },
+  { value: '6', label: 'Grade 6' },
+  { value: '7', label: 'Grade 7' },
+  { value: '8', label: 'Grade 8' },
+  { value: '9', label: 'Grade 9' },
+  { value: '10', label: 'Grade 10' },
+  { value: '11', label: 'Grade 11' },
+  { value: '12', label: 'Grade 12' },
+];
+
 function QuestionnaireForm() {
   const [formData, setFormData] = useState({
-    employeename: '',
+    grade: '',
     staffno: '',
     region: '',
     gender: '',
@@ -50,12 +65,12 @@ function QuestionnaireForm() {
     jobfunction: '',
     softskills: {},
     technicalskills: {},
-    trainingimportance: [],
     trainingmaterialpreferences: [],
     traininglocation: '',
     training_method_preference: '',
     training_effectiveness: '',
     improvement_suggestions: '',
+    training_suggestions: '',
     id: ''
   });
 
@@ -72,7 +87,7 @@ function QuestionnaireForm() {
     try {
       // First create the questionnaire
       const questionnaireResponse = await api.post('/api/questionnaire/', {
-        name: formData.employeename,
+        grade: formData.grade,
         staffno: formData.staffno,
         gender: formData.gender,
         agegroup: formData.agegroup,
@@ -81,12 +96,11 @@ function QuestionnaireForm() {
         department: formData.department,
         division: formData.division,
         jobfunction: formData.jobfunction,
-        trainingimportance: formData.trainingimportance,
-        trainingmaterialpreferences: formData.trainingmaterialpreferences,
         traininglocation: formData.traininglocation,
         training_method_preference: formData.training_method_preference,
         training_effectiveness: formData.training_effectiveness,
-        improvement_suggestions: formData.improvement_suggestions
+        improvement_suggestions: formData.improvement_suggestions,
+        training_suggestions: formData.training_suggestions
       });
 
       // Axios automatically throws for non-200 status codes, so if we get here, the request was successful
@@ -124,21 +138,21 @@ function QuestionnaireForm() {
       }
 
       // After creating the questionnaire and before alert('Form submitted successfully!')
-      const trainingImportanceEntries = formData.trainingimportance.map(type =>
-        api.post('/api/training-importances/', {
+      const trainingmaterialpreferences = formData.trainingmaterialpreferences.map(materialId =>
+        api.post('/api/questionnaire-training-material-preferences/', {
           questionnaire: questionnaireData.id,
-          training_type: type
+          material_preference: materialId
         })
       );
-      if (trainingImportanceEntries.length > 0) {
-        await Promise.all(trainingImportanceEntries);
+      if (trainingmaterialpreferences.length > 0) {
+        await Promise.all(trainingmaterialpreferences);
       }
 
       
 
       alert('Form submitted successfully!');
       setFormData({
-        employeename: '',
+        grade: '',
         staffno: '',
         gender: '',
         agegroup: '',
@@ -149,12 +163,12 @@ function QuestionnaireForm() {
         jobfunction: '',
         softskills: {},
         technicalskills: {},
-        trainingimportance: [],
         trainingmaterialpreferences: [],
         traininglocation: '',
         training_method_preference: '',
         training_effectiveness: '',
         improvement_suggestions: '',
+        training_suggestions: '',
         id: ''
       });
     } catch (error) {
@@ -197,22 +211,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">2. Please enter your name</label>
-            <div className="control">
-              <input 
-                className="input" 
-                type="text" 
-                name="employeename"
-                value={formData.employeename}
-                onChange={handleInputChange}
-                placeholder="Name"
-                required
-              />
-            </div>
-          </div>
-
-          <div className="field">
-            <label className="label">3. Please select your gender</label>
+            <label className="label">2. Please select your gender</label>
             <div className="control">
               <GenderDropdown 
                 value={formData.gender}
@@ -222,7 +221,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">4. Please select your age group</label>
+            <label className="label">3. Please select your age group</label>
             <div className="control">
               <AgeGroupDropdown 
                 value={formData.agegroup}
@@ -232,7 +231,7 @@ function QuestionnaireForm() {
           </div>
           
           <div className="field">
-            <label className="label">5. Please indicate how long you have worked at Kenya Seed Ltd</label>
+            <label className="label">4. Please indicate how long you have worked at Kenya Seed Ltd</label>
             <div className="control">
               <ServiceAgeGroupDropdown 
                 value={formData.serviceagegroup}
@@ -240,8 +239,27 @@ function QuestionnaireForm() {
               />
             </div>
           </div>
+
+          <div className='field'>
+            <label className="label">4. Please select your grade</label>
+            <div className="control">
+              <select
+                className="input"
+                value={formData.grade}
+                onChange={e => setFormData(prev => ({ ...prev, grade: e.target.value }))}
+                required
+              >
+                {GRADE_CHOICES.map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
           <div className="field">
-            <label className="label">6. Please select your responsibility level</label>
+            <label className="label">5. Please select your responsibility level</label>
             <div className="control">
               <EmployeeLevelDropdown 
                 value={formData.employeelevel}
@@ -251,7 +269,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">7. Please select your department</label>
+            <label className="label">6. Please select your department</label>
             <div className="control">
               <DepartmentDropdown 
                 value={formData.department}
@@ -267,7 +285,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">8. Please select your division</label>
+            <label className="label">7. Please select your division</label>
             <div className="control">
               <DivisionDropdown 
                 value={formData.division}
@@ -278,7 +296,7 @@ function QuestionnaireForm() {
           </div>
 
           <div className="field">
-            <label className="label">9. Please select your job function</label>
+            <label className="label">8. Please select your job function</label>
             <div className="control">
               <JobTypeDropdown 
                 value={formData.jobfunction}
@@ -288,7 +306,7 @@ function QuestionnaireForm() {
             </div>
           </div>
           <div className="field">
-            <label className="label">10. To help us understand your technical development and training needs, please select the training and development that you have received at Kenya Seed Company in the last two years from the list below: </label>
+            <label className="label">9. To help us understand your technical development and training needs, please select the training and development that you have received at Kenya Seed Company in the last two years from the list below: </label>
           </div>
 
           <div className="field">
@@ -314,7 +332,7 @@ function QuestionnaireForm() {
           </div>
 
             <div className="field">
-              <label className="label">11. Please select your preferred training location</label>
+              <label className="label">10. Please select your preferred training location</label>
               <div className="control">
                 <select
                   className="input"
@@ -330,16 +348,21 @@ function QuestionnaireForm() {
             </div>
 
             <div className="field">
+              <label className="label">11. What type of training do you feel is most important for your job?</label>
               <div className="control">
-                <TrainingImportanceMultichoice
-                  value={formData.trainingimportance}
-                  onChange={value => setFormData(prev => ({ ...prev, trainingimportance: value }))}
+                <textarea
+                  className="textarea"
+                  value={formData.training_suggestions}
+                  onChange={e => setFormData(prev => ({ ...prev, training_suggestions: e.target.value }))}
+                  placeholder="Your suggestions..."
+                  rows={3}
+                  required
                 />
               </div>
             </div>
 
             <div className="field">
-              <label className="label">13. Which method of training do you prefer?</label>
+              <label className="label">12. Which method of training do you prefer?</label>
               <div className="control">
                 <select
                   className="input"
@@ -365,7 +388,7 @@ function QuestionnaireForm() {
 
 
             <div className="field">
-              <label className="label">15. How would you rate the effectiveness of the training programs you have participated in?</label>
+              <label className="label">14. How do you rate the effectiveness of the training programs you have participated in?</label>
               <div className="control">
                 <select
                   className="input"
@@ -381,7 +404,7 @@ function QuestionnaireForm() {
             </div>
 
             <div className="field">
-              <label className="label">16. What improvements do you suggest to make the training programs more effective?</label>
+              <label className="label">15. What improvements do you suggest to make the training programs more effective?</label>
               <div className="control">
                 <textarea
                   className="textarea"
@@ -400,7 +423,7 @@ function QuestionnaireForm() {
           </div>
           <div className="control">
             <button type="button" className="button is-text" onClick={() => setFormData({
-              employeename: '',
+              grade: '',
               staffno: '',
               gender: '',
               agegroup: '',
@@ -411,7 +434,7 @@ function QuestionnaireForm() {
               jobfunction: '',
               softskills: {},
               technicalskills: {},
-              trainingimportance: [],
+              trainingmaterialpreferences: [],
               traininglocation: '',
               training_method_preference: '',
               training_effectiveness: '',

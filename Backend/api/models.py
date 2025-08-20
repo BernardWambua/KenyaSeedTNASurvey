@@ -112,7 +112,8 @@ class Questionnaire(models.Model):
         ('offsite', 'Off-site (away from your workstation)'),
         ('hybrid', 'Hybrid (both on-site and off-site)'),
     ]
-    name = models.CharField(max_length=100, null=True, blank=True)
+    GRADE_CHOICES = [(str(i), f"Grade {i}") for i in range(1, 13)]
+    grade = models.CharField(max_length=2, choices=GRADE_CHOICES, null=True, blank=True)
     staffno = models.CharField(max_length=100, unique=True)
     gender = models.ForeignKey(Gender, on_delete=models.CASCADE)
     agegroup = models.ForeignKey(AgeGroup, on_delete=models.CASCADE)
@@ -133,6 +134,11 @@ class Questionnaire(models.Model):
         null=True,
         blank=True,
         help_text="What improvements do you suggest to make the training programs more effective?"
+    )
+    training_suggestions = models.TextField(
+        null=True,
+        blank=True,
+        help_text="What type of training do you feel is most important for your job?"
     )
     created_at = models.DateTimeField(auto_now_add=True)  
     

@@ -1,49 +1,51 @@
 import React, { useState, useEffect } from 'react';
-
-// You may want to fetch these from your backend, but for now, hardcode to match your model
-const MATERIAL_TYPE_CHOICES = [
-    { value: 'handouts', label: 'Handouts' },
-    { value: 'digital', label: 'Digital copies (e.g. PDFs, ebooks)' },
-    { value: 'videos', label: 'Videos' },
-    { value: 'audio', label: 'Audio recordings' },
-];
+import api from '../api';
 
 function TrainingMaterialPreferenceMultichoice({ value = [], onChange }) {
-    const [selected, setSelected] = useState(value);
+  const [selected, setSelected] = useState([]);
+  const [materialTypeChoices, setMaterialTypeChoices] = useState([]);
 
-    useEffect(() => {
-        setSelected(value);
-    }, [value]);
+  useEffect(() => {
+    api.get('/api/training-material-preferences/')
+      .then(response => setMaterialTypeChoices(response.data))
+      .catch(error => console.error('Error fetching material preferences:', error));
+  }, []);
 
-    const handleChange = (type) => {
-        let updated;
-        if (selected.includes(type)) {
-            updated = selected.filter(item => item !== type);
-        } else {
-            updated = [...selected, type];
-        }
-        setSelected(updated);
-        onChange && onChange(updated);
-    };
+  useEffect(() => {
+    setSelected(value || []);
+  }, [value]);
 
-    return (
-        <div>
-            <label>14. <b>How do you prefer to receive training materials? (Select all that apply)</b></label>
-            <div style={{ marginTop: 10 }}>
-                {MATERIAL_TYPE_CHOICES.map(option => (
-                    <label key={option.value} style={{ display: 'block', marginBottom: 8 }}>
-                        <input
-                            type="checkbox"
-                            value={option.value}
-                            checked={selected.includes(option.value)}
-                            onChange={() => handleChange(option.value)}
-                        />
-                        {' '}{option.label}
-                    </label>
-                ))}
-            </div>
-        </div>
-    );
+  const handleChange = (id) => {
+    let updated;
+    if (selected.includes(id)) {
+      updated = selected.filter(item => item !== id);
+    } else {
+      updated = [...selected, id];
+    }
+    setSelected(updated);
+    onChange && onChange(updated);
+  };
+
+  return (
+    <div>
+      <label>
+        14. <b>How do you prefer to receive training materials? (Select all that apply)</b>
+      </label>
+      <div style={{ marginTop: 10 }}>
+        {materialTypeChoices.map(option => (
+          <label key={option.id} style={{ display: 'block', marginBottom: 8 }}>
+            <input
+              type="checkbox"
+              value={option.id}
+              checked={selected.includes(option.id)}
+              onChange={() => handleChange(option.id)}
+            />
+            {' '}{option.name_display}
+          </label>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default TrainingMaterialPreferenceMultichoice;

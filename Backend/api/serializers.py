@@ -84,6 +84,7 @@ class JobFunctionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class TrainingMaterialPreferenceSerializer(serializers.ModelSerializer):
+    name_display = serializers.CharField(source='get_name_display', read_only=True)
     class Meta:
         model = TrainingMaterialPreference
         fields = '__all__'
